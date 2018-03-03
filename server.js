@@ -29,6 +29,6 @@ app.use(express.static(path.resolve(__dirname, 'dist')));
 require('./server/config/database');
 
 app.use('/api', require('./server/config/routes'));
-app.use(require('/server/config/routes/catchall-routes'));
+app.use(require('./server/config/routes/catchall-routes'));
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

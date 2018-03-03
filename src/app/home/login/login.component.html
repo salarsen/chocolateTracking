@@ -1,0 +1,18 @@
+<div *ngIf='loginErrors.length'>
+  <ul class='alert alert-danger'>
+    <li *ngFor='let error of loginErrors'>{{error}}</li>
+  </ul>
+</div>
+
+<section>
+  <fieldset>
+    <legend>Login</legend>
+    <form (submit)='onSubmit(login.value)' #login='ngForm' class='form-group'>
+      <div class='form-control'>
+        <label for="username">Username:</label>
+        <input type="text" name="username" #username='ngModel' [(ngModel)]='user.username'>
+      </div>
+      <button *ngIf='login.valid'>Login</button>
+    </form>
+  </fieldset>
+</section>
