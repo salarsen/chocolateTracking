@@ -17,7 +17,7 @@ const batchSchema = new Schema({
             ref : 'Ingredient',
         },
         amountUsed : {
-            type : Number,
+               type : Number,
             required : true,
         },
     }],
