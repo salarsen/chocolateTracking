@@ -24,7 +24,7 @@ module.exports = {
          })
          .catch(error => {
             response.status(422).json(
-               Object.keys(error.errors).map(key => error.errors[key].message)
+               Object.keys(error.errors).map(key => error.errors[key].message) // map errors
             );
          });
    },
