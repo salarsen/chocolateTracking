@@ -15,7 +15,7 @@ export class authService {
   constructor(private cookieService : CookieService, private http : Http) { }
 
   login(user : User) : Promise<User> {
-    console.log(`Login hit`)
+    console.log(`Trying to login user ${user.username}`)
     return this.http.post(this.base + 'login', user)
       .map(response => response.json())
       .toPromise();

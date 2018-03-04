@@ -12,7 +12,7 @@ module.exports = {
             return completeLogin(request, response, user);
          })
          .catch(error => {
-            response.status(401).json('User does not exists');
+            return response.status(401).json('User does not exists');
          });
    },
    register(request, response){
@@ -20,10 +20,10 @@ module.exports = {
       
       User.create(request.body)
          .then(user => {
-            completeLogin(request, response, user);
+            return completeLogin(request, response, user);
          })
          .catch(error => {
-            response.status(422).json(
+            return response.status(422).json(
                Object.keys(error.errors).map(key => error.errors[key].message) // map errors
             );
          });
@@ -34,7 +34,7 @@ module.exports = {
       request.session.destroy();
       response.clearCookie('userId');
       response.clearCookie('expiration');
-      response.json(true);
+      return response.json(true);
    }
 };
 
@@ -48,5 +48,5 @@ function completeLogin(request, response, user){
    response.cookie('userId', user._id.toString());
    response.cookie('expiration', Date.now() + 86400 * 1000);
 
-   response.json(user);
+   return response.json(user);
 }

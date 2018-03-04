@@ -19,7 +19,11 @@ export class LoginComponent {
 
   onSubmit() : void {
     this.auth.login(this.user)
-      .then(() => this.router.navigate(['batch']))
+      .then((res) => {
+        console.log(res)
+        console.log('Attempting to redirect to Batch')
+        this.router.navigate(['batch'])
+      })
       .catch(response => this.handleErrors(response.json()));
   }
 

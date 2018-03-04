@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
+import { Router } from '@angular/router';
+import { authService } from '../services/auth.service';
+// nav component
 
 @Component({
   selector: 'app-batch',
@@ -7,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BatchComponent implements OnInit {
 
-  constructor() { }
+  constructor(private auth : authService, private router : Router) { }
 
   ngOnInit() {
+    if(!this.auth.isAuthed()){
+      console.log('Not authed');
+      this.router.navigate(['home']);
+    }
   }
 
 }

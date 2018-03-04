@@ -19,7 +19,10 @@ export class RegisterComponent {
 
   onSubmit() : void {
     this.auth.register(this.user)
-      .then(() => this.router.navigate(['batch']))
+      .then(() => {
+        console.log('Attempting to redirect to Batch')
+        this.router.navigate(['batch'])
+      })
       .catch(response => this.handleErrors(response.json()));
   }
 
