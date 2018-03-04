@@ -1,3 +1,40 @@
-<p>
-  ingredient-new works!
-</p>
+<legend>Add an Ingredient:</legend>
+
+<form (submit)='onSubmit($event, form) || form.reset()' #form='ngForm'>
+  <div>
+    <label for="name">Ingredient Name:</label>
+    <input type="text" name="name" [(ngModel)]="ingredient.name" required>
+  </div>
+  <div>
+    <label for="supplier">Supplier:</label>
+    <input type="text" name="supplier" [(ngModel)]="ingredient.supplier" required>
+  </div>
+  <div>
+    <label for="supplierLotNo">Supplier Lot Number:</label>
+    <input type="text" name="supplierLotNo" [(ngModel)]="ingredient.supplierLotNo" required>
+  </div>
+  <div>
+    <label for="shippingTrackingNo">Shipping Tracking Number:</label>
+    <input type="text" name="shippingTrackingNo" [(ngModel)]="ingredient.shippingTrackingNo" required>
+  </div>
+  <div>
+    <label for="shippingSignedFor">Shipment Signed For By:</label>
+    <input type="text" name="shippingSignedFor" [(ngModel)]="ingredient.shippingSignedFor" required>
+  </div>
+  <div>
+    <label for="amount">Amount:</label>
+    <input type="text" name="amount" [(ngModel)]="ingredient.amount" required>
+  </div>
+  <div>
+    <label for="amountType">Amount Type:</label>
+    <select name="amountType" [(ngModel)]="ingredient.amountType">
+      <option value="kg">Kilogram</option>
+      <option value="g">Gram</option>
+      <option value="lb">Pound</option>
+      <option value="oz">Ounce</option>
+    </select>
+  </div>
+  <button [disabled]="form.invalid">Add Recipe</button>
+</form>
+
+<button routerLink="/home">Back</button>
