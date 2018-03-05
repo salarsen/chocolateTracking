@@ -41,6 +41,10 @@ const ingredientSchema = new Schema({
         required : true,
         default : 0,
     },
+    amountUsed : {
+        type : Number,
+        default : 0,
+    },
     amountType : {
         type : String,
         required : true,

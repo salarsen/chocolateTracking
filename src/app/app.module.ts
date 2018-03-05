@@ -11,7 +11,7 @@ import { batchService } from './services/batch.service';
 import { ingredientService } from './services/ingredient.service';
 
 import { AppComponent } from './app.component';
-import { IngredientComponent } from './ingredient/ingredient.component';
+// import { IngredientComponent } from './ingredient/ingredient.component';
 import { BatchComponent } from './batch/batch.component';
 import { IngredientNewComponent } from './ingredient/ingredient-new/ingredient-new.component';
 import { IngredientEditComponent } from './ingredient/ingredient-edit/ingredient-edit.component';
@@ -21,12 +21,16 @@ import { HomeComponent } from './home/home.component';
 import { NavComponent } from './nav/nav.component';
 import { LoginComponent } from './home/login/login.component';
 import { RegisterComponent } from './home/register/register.component';
+import { BatchNewComponent } from './batch/batch-new/batch-new.component';
+import { BatchListComponent } from './batch/batch-list/batch-list.component';
+import { BatchDetailComponent } from './batch/batch-detail/batch-detail.component';
+import { BatchEditComponent } from './batch/batch-edit/batch-edit.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    IngredientComponent,
+    // IngredientComponent,
     BatchComponent,
     IngredientNewComponent,
     IngredientEditComponent,
@@ -35,7 +39,11 @@ import { RegisterComponent } from './home/register/register.component';
     HomeComponent,
     NavComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    BatchNewComponent,
+    BatchListComponent,
+    BatchDetailComponent,
+    BatchEditComponent
   ],
   imports: [
     BrowserModule,

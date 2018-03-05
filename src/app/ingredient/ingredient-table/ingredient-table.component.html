@@ -1,3 +1,20 @@
-<p>
-  ingredient-table works!
-</p>
+<app-nav [links]="[{ link : 'batch', name : 'View Batches'},{ link : 'ingredients/new', name : 'New Ingredient'}]"></app-nav>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Supplier</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let ingredient of ingredients'>
+      <td>{{ ingredient._id }}</td>
+      <td>{{ ingredient.name }}</td>
+      <td>{{ ingredient.amount }} {{ ingredient.amountType }}</td>
+      <td>{{ ingredient.supplier}}</td>
+    </tr>
+  </tbody>
+</table>

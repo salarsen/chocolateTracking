@@ -9,10 +9,10 @@ module.exports = {
             if(!user) { throw new Error(); }
 
             // here is where we do password verification if we added it for external network access
-            return completeLogin(request, response, user);
+            completeLogin(request, response, user);
          })
          .catch(error => {
-            return response.status(401).json('User does not exists');
+            response.status(401).json('User does not exists');
          });
    },
    register(request, response){
@@ -20,10 +20,10 @@ module.exports = {
       
       User.create(request.body)
          .then(user => {
-            return completeLogin(request, response, user);
+            completeLogin(request, response, user);
          })
          .catch(error => {
-            return response.status(422).json(
+            response.status(422).json(
                Object.keys(error.errors).map(key => error.errors[key].message) // map errors
             );
          });
@@ -34,7 +34,7 @@ module.exports = {
       request.session.destroy();
       response.clearCookie('userId');
       response.clearCookie('expiration');
-      return response.json(true);
+      response.json(true);
    }
 };
 
@@ -48,5 +48,5 @@ function completeLogin(request, response, user){
    response.cookie('userId', user._id.toString());
    response.cookie('expiration', Date.now() + 86400 * 1000);
 
-   return response.json(user);
+   response.json(user);
 }

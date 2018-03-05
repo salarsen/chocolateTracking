@@ -14,7 +14,14 @@ export class ingredientService {
   constructor(private http : Http) { }
 
   getIngredients() : Observable<Ingredient[]> {
+    console.log('Attempting to fetch ingredients');
     return this.http.get(ingredientService.base)
+      .map(response => response.json());
+  }
+
+  getIngredientsAvailable() : Observable<Ingredient[]> {
+    console.log(`Attempting to fetch ingredients not used yet`);
+    return this.http.get(ingredientService.base + '/unused')
       .map(response => response.json());
   }
 
@@ -24,6 +31,7 @@ export class ingredientService {
   }
 
   createIngredient(ingredient : Ingredient) : Observable<Ingredient> {
+    console.log(`Attempting to create ingredient: ${ingredient}`)
     return this.http.post(ingredientService.base, ingredient)
       .map(response => response.json());
   }
