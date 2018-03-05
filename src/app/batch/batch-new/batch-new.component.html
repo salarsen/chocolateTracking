@@ -1,3 +1,9 @@
-<p>
-  batch-new works!
-</p>
+{{ ingredients }}
+
+<ul>
+  <li *ngFor='let ingredient of ingredients'>{{ ingredient._id }}</li>
+</ul>
+<select name="test" #test='ngModel' [(ngModel)]="test">
+  <option *ngFor='let ingredient of ingredients' value="{{ ingredient._id">{{ ingredient.name }} - {{ ingredient.supplier }}</option>
+</select>
+{{ test }}

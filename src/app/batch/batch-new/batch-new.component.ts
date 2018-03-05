@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { authService } from '../../services/auth.service';
@@ -16,8 +17,8 @@ export class BatchNewComponent implements OnInit {
 
   batch : Batch = new Batch();
   ingredients : Array<Ingredient> = [];
-  batchIngredients : Array<Batch> = [];
-
+  batchIngredients : Array<{'ingredient' : Ingredient, 'amount' : number}> = [];
+  test : String = "";
   errorMessage : string;
 
   constructor(
@@ -33,6 +34,7 @@ export class BatchNewComponent implements OnInit {
       this.router.navigate(['home']);
     }
 
+    console.log(`attempting to fetch available ingredients`)
     this.ingredService.getIngredientsAvailable()
       .subscribe(ingredients => {
          this.ingredients = ingredients;
@@ -42,10 +44,7 @@ export class BatchNewComponent implements OnInit {
   }
 
    addIngredient(ingredient : Ingredient, amount : number) : void {
-      this.batchIngredients.push({
-         'ingredient' : ingredient,
-         'amountUsed' : amount,
-      })
+      this.batchIngredients.push({ingredient, amount})
   }
 
 }

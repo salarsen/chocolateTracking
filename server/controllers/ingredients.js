@@ -13,7 +13,8 @@ module.exports = {
          .catch(console.log)
    },
    unused(request,response){
-      Ingredient.find({ 'amountUsed' : { $lt : 'amount'}})
+      console.log('Looking for unused ingredients')
+      Ingredient.find({ 'used' : false })
          .then(ingredients => {
             if(!ingredients) { return response.json('{ "error" : "No available ingredients"}')}
 

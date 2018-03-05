@@ -21,7 +21,7 @@ export class ingredientService {
 
   getIngredientsAvailable() : Observable<Ingredient[]> {
     console.log(`Attempting to fetch ingredients not used yet`);
-    return this.http.get(ingredientService.base + '/unused')
+    return this.http.get(ingredientService.base + 'unused')
       .map(response => response.json());
   }
 

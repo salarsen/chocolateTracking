@@ -3,7 +3,7 @@ const router = require('express').Router();
 
 module.exports = router
    .get('/', ingredientController.index)
-   .get('/unusued', ingredientController.unused)
+   .get('/unused', ingredientController.unused)
    .post('/', ingredientController.create)
    .get('/:ingredient_id', ingredientController.get)
    .put('/:ingredient_id', ingredientController.update)

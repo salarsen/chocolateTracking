@@ -45,6 +45,10 @@ const ingredientSchema = new Schema({
         type : Number,
         default : 0,
     },
+    used : {
+        type : Boolean,
+        default : false,
+    },
     amountType : {
         type : String,
         required : true,
@@ -62,5 +66,11 @@ const ingredientSchema = new Schema({
 },{
     timestamps: true,
 });
+
+ingredientSchema.pre('save',function(next){
+    this.used = (this.amountUsed >= this.amount);
+
+    next();
+})
 
 module.exports = mongoose.model('Ingredient', ingredientSchema);
