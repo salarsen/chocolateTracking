@@ -17,9 +17,13 @@ export class BatchNewComponent implements OnInit {
 
   batch : Batch = new Batch();
   ingredients : Array<Ingredient> = [];
-  batchIngredients : Array<{'ingredient' : Ingredient, 'amount' : number}> = [];
-  test : String = "";
-  errorMessage : string;
+  // batchIngredients : Array<{'ingredient' : Ingredient, 'amount' : number}> = [];
+  // batchIngredients : Array<String> = [];
+  batchIngredients : Array<number> = [];
+  test : number;
+  // test : Ingredient = new Ingredient();
+
+  errorMessage : String;
 
   constructor(
     private auth : authService,
@@ -43,8 +47,9 @@ export class BatchNewComponent implements OnInit {
       });
   }
 
-   addIngredient(ingredient : Ingredient, amount : number) : void {
-      this.batchIngredients.push({ingredient, amount})
+   addIngredient() : void {
+      console.log('adding ingredient',this.test)
+      this.batchIngredients.push(this.test);
   }
 
 }
