@@ -1,13 +1,13 @@
 {{ ingredients }}
 
 <ul>
-  <li *ngFor='let ingredient of ingredients; trackBy: index'>{{ ingredient._id }}</li>
+  <li *ngFor='let ingredient of ingredients; index'>{{ ingredient._id }}</li>
 </ul>
 <select name="test" [(ngModel)]="test">
-  <option *ngFor='let ingredient of ingredients' value='{{ index }}'>{{ index }} {{ ingredient.name }} - {{ ingredient.supplier }}</option>
+  <option *ngFor='let ingredient of ingredients, let idx = index' value='{{ idx }}'>{{ idx + 1 }}) {{ ingredient.name }} - {{ ingredient.supplier }}</option>
 </select>
 <input type="number" [(ngModel)]="amountToUse">
-<a (click)='addIngredient()'>Add</a>
+<a (click)='addIngredient($event)'>Add</a>
 {{ batchIngredients }}
 <hr>
 <ul>

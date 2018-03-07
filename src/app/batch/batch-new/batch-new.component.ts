@@ -19,7 +19,7 @@ export class BatchNewComponent implements OnInit {
   ingredients : Array<Ingredient> = [];
   // batchIngredients : Array<{'ingredient' : Ingredient, 'amount' : number}> = [];
   // batchIngredients : Array<String> = [];
-  batchIngredients : Array<number> = [];
+  batchIngredients : Array<Ingredient> = [];
   test : number;
   // test : Ingredient = new Ingredient();
 
@@ -47,9 +47,11 @@ export class BatchNewComponent implements OnInit {
       });
   }
 
-   addIngredient() : void {
+   addIngredient(event : Event) : void {
+      console.log(event);
       console.log('adding ingredient',this.test)
-      this.batchIngredients.push(this.test);
+      this.batchIngredients.push(this.ingredients[this.test]);
+      this.test = null;
   }
 
 }
