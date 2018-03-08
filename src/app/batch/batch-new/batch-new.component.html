@@ -7,9 +7,9 @@
   <option *ngFor='let ingredient of ingredients, let idx = index' [ngValue]='ingredient'>{{ ingredient.name }} - {{ ingredient.supplier }}</option>
 </select>
 <input type="number" [(ngModel)]="amountToUse">
-<a (click)='addIngredient($event)'>Add</a>
+<a (click)='addIngredient($event)'>+</a>
 {{ batchIngredients }}
 <hr>
 <ul>
-  <li *ngFor='let batch of batchIngredients'>{{ batch._id }}</li>
+  <li *ngFor='let batch of batchIngredients'>{{ batch._id }}<a (click)='removeIngredient($event, batch)'>-</a></li>
 </ul>

@@ -48,9 +48,21 @@ export class BatchNewComponent implements OnInit {
   }
 
    addIngredient(event : Event) : void {
-      console.log(event);
-      this.batchIngredients.push(this.test);
-      this.test = new Ingredient();
+     console.log(Boolean(this.batchIngredients.indexOf(this.test)));
+      if(this.test._id){ // check to see if the user submitted a blank option
+        if(this.batchIngredients.indexOf(this.test)){
+          // update batch amount at location
+          this.test = new Ingredient();
+        } else {
+          this.batchIngredients.push(this.test);
+          this.test = new Ingredient();
+        }
+      }
+  }
+
+  removeIngredient(event : Event, ingredient : Ingredient) : void {
+    console.log(this.batchIngredients.indexOf(ingredient));
+    // this.batchIngredients.splice(this.batchIngredients.indexOf(ingredient),1);
   }
 
 }
