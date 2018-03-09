@@ -19,7 +19,7 @@ export class BatchNewComponent implements OnInit {
   ingredients : Array<Ingredient> = [];
   // batchIngredients : Array<{'ingredient' : Ingredient, 'amount' : number}> = [];
   // batchIngredients : Array<String> = [];
-  batchIngredients : Array<Object> = [];
+  batchIngredients : Array<Ingredient> = [];
   ingredientToAdd: Ingredient = new Ingredient();
   amountToUse : number;
   // test : Ingredient = new Ingredient();
@@ -51,14 +51,24 @@ export class BatchNewComponent implements OnInit {
   addIngredient(event : Event) : void {
     //  console.log(Boolean(this.batchIngredients.indexOf(this.ingredientToAdd)));
       if(this.ingredientToAdd._id && this.amountToUse !== null && this.amountToUse !== 0){ // check to see if the user submitted a blank option
-        // if(this.batchIngredients.indexOf(this.ingredientToAdd)){
-          // update batch amount at location
-          // this.ingredientToAdd = new Ingredient();
-        // } else {
-        this.batchIngredients.push({ ingredient : this.ingredientToAdd, amount : this.amountToUse});
+        let idx = this.ingredients.indexOf(this.ingredientToAdd)
+        console.log(`found at ${idx}`)
+         //   if(this.ingredients[idx].amountUsed + this.amountToUse < this.ingredients[idx].amount){
+         // check if already in batchingredients, if so update, otherwise add it.
+          let internalIdx = this.batchIngredients.indexOf(this.ingredientToAdd)
+         if(internalIdx >= 0 && this.batchIngredients[internalIdx].amountUsed + this.amountToUse <= this.batchIngredients[internalIdx].amount){
+            this.batchIngredients[internalIdx].amountUsed += this.amountToUse;
+         } else {
+            this.ingredientToAdd.amountUsed = this.ingredients[idx].amountUsed + this.amountToUse;
+            this.batchIngredients.push(this.ingredientToAdd);
+         }
+         // if not 
+      //  }
+        
+      //   this.batchIngredients.push({ ingredient : this.ingredientToAdd, amount : this.amountToUse});
         this.ingredientToAdd = new Ingredient();
         this.amountToUse = null;
-        console.log(this.batchIngredients);
+      //   console.log(this.batchIngredients);
         // }
       }
   }

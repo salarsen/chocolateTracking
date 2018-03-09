@@ -7,6 +7,7 @@ export class Ingredient{
    shippingTrackingNo : string;
    shippingSignedFor : string;
    amount : number;
+   amountUsed : number;
    amountType : string;
    _addedBy : number;
 }

@@ -1,6 +1,6 @@
 
 <ul>
-  <li *ngFor='let ingredient of batchIngredients'>{{ ingredient.ingredient._id }} {{ ingredient.ingredient.name }}<a (click)='removeIngredient($event, ingredient)'>-</a></li>
+  <li *ngFor='let ingredient of batchIngredients'>{{ ingredient._id }} {{ ingredient.name }} {{ ingredient.amountUsed }} {{ ingredient.amountType}} <a (click)='removeIngredient($event, ingredient)'>-</a></li>
 </ul>
 <select name="test" [(ngModel)]="ingredientToAdd">
   <option *ngFor='let ingredient of ingredients, let idx = index' [ngValue]='ingredient'>{{ ingredient.name }} - {{ ingredient.supplier }}</option>
