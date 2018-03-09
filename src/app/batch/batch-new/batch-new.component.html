@@ -1,15 +1,11 @@
-{{ ingredients }}
 
 <ul>
-  <li *ngFor='let ingredient of ingredients; index'>{{ ingredient._id }}</li>
+  <li *ngFor='let ingredient of batchIngredients'>{{ ingredient.ingredient._id }} {{ ingredient.ingredient.name }}<a (click)='removeIngredient($event, ingredient)'>-</a></li>
 </ul>
-<select name="test" [(ngModel)]="test">
+<select name="test" [(ngModel)]="ingredientToAdd">
   <option *ngFor='let ingredient of ingredients, let idx = index' [ngValue]='ingredient'>{{ ingredient.name }} - {{ ingredient.supplier }}</option>
 </select>
 <input type="number" [(ngModel)]="amountToUse">
+{{ ingredientToAdd.amountType }}
 <a (click)='addIngredient($event)'>+</a>
-{{ batchIngredients }}
 <hr>
-<ul>
-  <li *ngFor='let batch of batchIngredients'>{{ batch._id }}<a (click)='removeIngredient($event, batch)'>-</a></li>
-</ul>

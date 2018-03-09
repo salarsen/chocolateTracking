@@ -19,8 +19,9 @@ export class BatchNewComponent implements OnInit {
   ingredients : Array<Ingredient> = [];
   // batchIngredients : Array<{'ingredient' : Ingredient, 'amount' : number}> = [];
   // batchIngredients : Array<String> = [];
-  batchIngredients : Array<Ingredient> = [];
-   test: Ingredient = new Ingredient();
+  batchIngredients : Array<Object> = [];
+  ingredientToAdd: Ingredient = new Ingredient();
+  amountToUse : number;
   // test : Ingredient = new Ingredient();
 
   errorMessage : String;
@@ -47,16 +48,18 @@ export class BatchNewComponent implements OnInit {
       });
   }
 
-   addIngredient(event : Event) : void {
-     console.log(Boolean(this.batchIngredients.indexOf(this.test)));
-      if(this.test._id){ // check to see if the user submitted a blank option
-        if(this.batchIngredients.indexOf(this.test)){
+  addIngredient(event : Event) : void {
+    //  console.log(Boolean(this.batchIngredients.indexOf(this.ingredientToAdd)));
+      if(this.ingredientToAdd._id && this.amountToUse !== null && this.amountToUse !== 0){ // check to see if the user submitted a blank option
+        // if(this.batchIngredients.indexOf(this.ingredientToAdd)){
           // update batch amount at location
-          this.test = new Ingredient();
-        } else {
-          this.batchIngredients.push(this.test);
-          this.test = new Ingredient();
-        }
+          // this.ingredientToAdd = new Ingredient();
+        // } else {
+        this.batchIngredients.push({ ingredient : this.ingredientToAdd, amount : this.amountToUse});
+        this.ingredientToAdd = new Ingredient();
+        this.amountToUse = null;
+        console.log(this.batchIngredients);
+        // }
       }
   }
 
