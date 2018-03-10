@@ -40,6 +40,9 @@ export class BatchNewComponent implements OnInit {
     }
 
     console.log(`attempting to fetch available ingredients`)
+
+    this.batch.barCount = 0;
+    
     this.ingredService.getIngredientsAvailable()
       .subscribe(ingredients => {
          this.ingredients = ingredients;
@@ -75,7 +78,7 @@ export class BatchNewComponent implements OnInit {
 
   removeIngredient(event : Event, ingredient : Ingredient) : void {
     console.log(this.batchIngredients.indexOf(ingredient));
-    // this.batchIngredients.splice(this.batchIngredients.indexOf(ingredient),1);
+    this.batchIngredients.splice(this.batchIngredients.indexOf(ingredient),1);
   }
 
 }

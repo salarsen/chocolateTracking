@@ -1,11 +1,38 @@
+<form (submit)='createBatch($event, batch.value)' #batch='ngForm'>
+  <div class='form-control'>
+    <label for="barCount">Bar Count:</label>
+    <input type="number" name="barCount" #barCount='ngModel' [(ngModel)]="batch.barCount" value="0">
+  </div>
+  <table *ngIf='batchIngredients.length!==0'>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Amount Used</th>
+        <th>Supplier</th>
+        <th>Info</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let ingredient of batchIngredients'>
+        <td>{{ ingredient._id }}</td>
+        <td>{{ ingredient.name }}</td>
+        <td>{{ ingredient.amountUsed }} {{ ingredient.amountType }}</td>
+        <td>{{ ingredient.supplier }}</td>
+        <td><a (click)='getInfo($event, ingredient)'>i</a></td>
+        <td><a (click)='removeIngredient($event, ingredient)'>-</a></td>
+      </tr>
+    </tbody>
+  </table>
 
-<ul>
-  <li *ngFor='let ingredient of batchIngredients'>{{ ingredient._id }} {{ ingredient.name }} {{ ingredient.amountUsed }} {{ ingredient.amountType}} <a (click)='removeIngredient($event, ingredient)'>-</a></li>
-</ul>
+  {{ batch.ingredients.length}}
+  <button [disabled]='batch.ingredients.length===0'>Create Batch</button>
+</form>
+<legend>Add Ingredient:</legend>
 <select name="test" [(ngModel)]="ingredientToAdd">
   <option *ngFor='let ingredient of ingredients, let idx = index' [ngValue]='ingredient'>{{ ingredient.name }} - {{ ingredient.supplier }}</option>
 </select>
-<input type="number" [(ngModel)]="amountToUse">
+<input type="number" [(ngModel)]="amountToUse" (keyup.enter)='addIngredient($event)'>
 {{ ingredientToAdd.amountType }}
-<a (click)='addIngredient($event)'>+</a>
-<hr>
+<button (click)='addIngredient($event)'>Add</button>
