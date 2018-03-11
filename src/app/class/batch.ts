@@ -1,7 +1,7 @@
 export class Batch {
-   _id : number;
+   _id : string;
    barCount : number = 0;
-   ingredients : Array<Object>;
+   ingredients : Array<{'ingredient' : Object, 'amount' : number}> = [];
    // amountUsed : Array<number>;
    _addedBy : number;
 }

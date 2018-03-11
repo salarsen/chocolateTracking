@@ -1,5 +1,5 @@
 export class Ingredient{
-   _id : number;
+   _id : string;
    name : string;
    supplier : string;
    supplierLotNo : string;

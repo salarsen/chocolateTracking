@@ -9,80 +9,74 @@ import { batchService } from '../../services/batch.service';
 import { Ingredient } from '../../class/ingredient';
 import { Batch } from '../../class/batch';
 @Component({
-  selector: 'app-batch-new',
-  templateUrl: './batch-new.component.html',
-  styleUrls: ['./batch-new.component.css']
+    selector: 'app-batch-new',
+    templateUrl: './batch-new.component.html',
+    styleUrls: ['./batch-new.component.css']
 })
 export class BatchNewComponent implements OnInit {
 
-  batch : Batch = new Batch();
-  ingredients : Array<Ingredient> = [];
-  batchIngredients : Array<{'ingredient' : Ingredient, 'amount' : number}> = [];
-//   batchIngredients : Array<Ingredient> = [];
-  ingredientToAdd: Ingredient = new Ingredient();
-  amountToUse : number;
-  // test : Ingredient = new Ingredient();
+    batch : Batch = new Batch();
+    ingredients : Array<Ingredient> = [];
+    batchIngredients : Array<{ 'ingredient' : Ingredient, 'amount' : number}> = [];
+    ingredientIndexer : Array<string> = []; // because find/filter/indexOf doesn't work on nested objects, more work to be done...
 
-  errorMessage : String;
+    ingredientToAdd: Ingredient = new Ingredient();
+    amountToUse : number;
 
-  constructor(
+    errorMessage : String;
+
+    constructor(
     private auth : authService,
     private ingredService : ingredientService,
     private batchService : batchService,
     private router : Router,
-  ) { }
+    ) { }
 
-  ngOnInit() {
-    if (!this.auth.isAuthed()) {
-      console.log('Not authed');
-      this.router.navigate(['home']);
+    ngOnInit() {
+        if (!this.auth.isAuthed()) {
+            console.log('Not authed');
+            this.router.navigate(['home']);
+        }
+
+        console.log(this.batch)
+
+        this.ingredService.getIngredientsAvailable()
+            .subscribe(ingredients => {
+                this.ingredients = ingredients;
+            },error => {
+                console.log(`Error fetching ingredients: ${error}`)
+            });
     }
 
-    console.log(`attempting to fetch available ingredients`)
+    addIngredient(event : Event) : void {
+        // Check if the values the user has submitted are correct
+        if(this.ingredientToAdd._id && this.amountToUse !== null && this.amountToUse !== 0){
+            
+            let idx = this.ingredientIndexer.indexOf(this.ingredientToAdd._id);
 
-    this.batch.barCount = 0;
-    
-    this.ingredService.getIngredientsAvailable()
-      .subscribe(ingredients => {
-         this.ingredients = ingredients;
-      },error => {
-         console.log(`Error fetching ingredients: ${error}`)
-      });
-  }
+            if(idx >= 0 && this.amountToUse + this.ingredientToAdd.amountUsed + this.batch.ingredients[idx].amount <= this.ingredientToAdd.amount){
+                this.batch.ingredients[idx].amount += this.amountToUse;
+            } else if(this.amountToUse + this.ingredientToAdd.amountUsed <= this.ingredientToAdd.amount){
+                this.batch.ingredients.push({ 'ingredient' : this.ingredientToAdd, 'amount' : this.amountToUse });
+                this.ingredientIndexer.push(this.ingredientToAdd._id);
+            }
+            this.ingredientToAdd = new Ingredient();
+            this.amountToUse = null;
+        }
+        console.log(this.batch);
+    }
 
-  addIngredient(event : Event) : void {
-    //  console.log(Boolean(this.batchIngredients.indexOf(this.ingredientToAdd)));
-      if(this.ingredientToAdd._id && this.amountToUse !== null && this.amountToUse !== 0){ // check to see if the user submitted a blank option
-        let idx = this.ingredients.indexOf(this.ingredientToAdd)
-        console.log(`found at ${idx}`)
-         //   if(this.ingredients[idx].amountUsed + this.amountToUse < this.ingredients[idx].amount){
-         // check if already in batchingredients, if so update, otherwise add it.
-          let internalIdx = this.batchIngredients.indexOf(this.ingredientToAdd)
-         if(internalIdx >= 0 && this.batchIngredients[internalIdx].amountUsed + this.amountToUse <= this.batchIngredients[internalIdx].amount){
-            this.batchIngredients[internalIdx].amountUsed += this.amountToUse;
-         } else {
-            this.ingredientToAdd.amountUsed = this.ingredients[idx].amountUsed + this.amountToUse;
-            this.batchIngredients.push(this.ingredientToAdd);
-         }
-         // if not 
-      //  }
-        
-      //   this.batchIngredients.push({ ingredient : this.ingredientToAdd, amount : this.amountToUse});
-        this.ingredientToAdd = new Ingredient();
-        this.amountToUse = null;
-      }
-  }
+    removeIngredient(event : Event, ingredientId : string) : void {
+        // console.log(ingredientId)
+        let idx = this.ingredientIndexer.indexOf(ingredientId);
+        this.batch.ingredients.splice(idx,1);
+        this.ingredientIndexer.splice(idx, 1);
+    }
 
-  removeIngredient(event : Event, ingredient : Ingredient) : void {
-    console.log(this.batchIngredients.indexOf(ingredient));
-    this.batchIngredients.splice(this.batchIngredients.indexOf(ingredient),1);
-  }
-
-  createBatch(event : Event) : void {
-     event.stopPropagation();
-   //   this.batch.ingredients = this.batchIngredients;
-   Object.assign(this.batch.ingredients, this.batchIngredients)
-     console.log(this.batch);
-  }
+    createBatch(event : Event) : void {
+        event.stopPropagation();
+        //   this.batch.ingredients = this.batchIngredients;
+        console.log(this.batch);
+    }
 
 }
