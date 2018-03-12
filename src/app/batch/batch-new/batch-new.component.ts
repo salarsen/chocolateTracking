@@ -8,6 +8,7 @@ import { batchService } from '../../services/batch.service';
 
 import { Ingredient } from '../../class/ingredient';
 import { Batch } from '../../class/batch';
+import { forEach } from '@angular/router/src/utils/collection';
 @Component({
     selector: 'app-batch-new',
     templateUrl: './batch-new.component.html',
@@ -38,7 +39,10 @@ export class BatchNewComponent implements OnInit {
             this.router.navigate(['home']);
         }
 
+        // this.batch.ingredients = [];
+        // this.batch.barCount = 0;
         console.log(this.batch)
+
 
         this.ingredService.getIngredientsAvailable()
             .subscribe(ingredients => {
@@ -49,33 +53,40 @@ export class BatchNewComponent implements OnInit {
     }
 
     addIngredient(event : Event) : void {
+        event.stopPropagation();
         // Check if the values the user has submitted are correct
         if(this.ingredientToAdd._id && this.amountToUse !== null && this.amountToUse !== 0){
             
             let idx = this.ingredientIndexer.indexOf(this.ingredientToAdd._id);
 
-            if(idx >= 0 && this.amountToUse + this.ingredientToAdd.amountUsed + this.batch.ingredients[idx].amount <= this.ingredientToAdd.amount){
-                this.batch.ingredients[idx].amount += this.amountToUse;
+            if(idx >= 0 && this.amountToUse + this.ingredientToAdd.amountUsed + this.batchIngredients[idx].amount <= this.ingredientToAdd.amount){
+                this.batchIngredients[idx].amount += this.amountToUse;
             } else if(this.amountToUse + this.ingredientToAdd.amountUsed <= this.ingredientToAdd.amount){
-                this.batch.ingredients.push({ 'ingredient' : this.ingredientToAdd, 'amount' : this.amountToUse });
+                this.batchIngredients.push({ 'ingredient' : this.ingredientToAdd, 'amount' : this.amountToUse });
                 this.ingredientIndexer.push(this.ingredientToAdd._id);
+            } else {
+                // error message here for not enough ingredients left
             }
             this.ingredientToAdd = new Ingredient();
             this.amountToUse = null;
+        } else {
+            // error message here for blank form data
         }
-        console.log(this.batch);
     }
 
     removeIngredient(event : Event, ingredientId : string) : void {
         // console.log(ingredientId)
         let idx = this.ingredientIndexer.indexOf(ingredientId);
-        this.batch.ingredients.splice(idx,1);
+        this.batchIngredients.splice(idx,1);
         this.ingredientIndexer.splice(idx, 1);
     }
 
     createBatch(event : Event) : void {
         event.stopPropagation();
-        //   this.batch.ingredients = this.batchIngredients;
+        // Object.assign(this.batch.ingredients, this.batchIngredients);
+        for (let item in this.batchIngredients) {
+            this.batch.ingredients.push({'ingredient' : this.batchIngredients[item].ingredient._id, 'amount' : this.batchIngredients[item].amount})
+        }
         console.log(this.batch);
     }
 
