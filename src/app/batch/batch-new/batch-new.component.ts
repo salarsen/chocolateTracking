@@ -88,7 +88,7 @@ export class BatchNewComponent implements OnInit {
         event.stopPropagation();
         // Object.assign(this.batch.ingredients, this.batchIngredients);
         for (let item in this.batchIngredients) {
-            this.batch.ingredients.push({'ingredient' : this.batchIngredients[item].ingredient._id, 'amount' : this.batchIngredients[item].amount})
+            this.batch.ingredients.push({'_ingredientId' : this.batchIngredients[item].ingredient._id, 'amount' : this.batchIngredients[item].amount})
         }
         this.batchService.createBatch(this.batch)
             .subscribe(batch => {

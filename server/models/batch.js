@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const batchSchema = new Schema({
-    date : {
-        type : Date,
-        required : true,
-    },
     barCount : {
         type : Number,
         required : true,
@@ -16,8 +12,8 @@ const batchSchema = new Schema({
             type : Schema.Types.ObjectId,
             ref : 'Ingredient',
         },
-        amountUsed : {
-               type : Number,
+        amount : {
+            type : Number,
             required : true,
         },
     }],
