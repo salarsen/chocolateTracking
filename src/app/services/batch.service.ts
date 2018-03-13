@@ -10,7 +10,7 @@ import { Response } from '@angular/http/src/static_response';
 @Injectable()
 export class batchService {
 
-  public static base = '/api/batches/';
+  public static base = '/api/batch/';
   constructor(private http : Http) { }
 
   getBatches() : Observable<Batch[]> {
@@ -24,6 +24,7 @@ export class batchService {
   }
 
   createBatch(batch: Batch): Observable<Batch> {
+    console.log(batch)
     return this.http.post(batchService.base, batch)
       .map(response => response.json());
   }

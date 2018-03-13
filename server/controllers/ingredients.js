@@ -18,7 +18,7 @@ module.exports = {
          .then(ingredients => {
             if(!ingredients) { return response.json('{ "error" : "No available ingredients"}')}
 
-            console.log(`Returning unused ingredients: ${ingredients}`);
+            // console.log(`Returning unused ingredients: ${ingredients}`);
 
             return response.json(ingredients);
          })
@@ -30,7 +30,7 @@ module.exports = {
    },
    create(request, response){
       console.log(`Trying to create an ingredient`);
-      console.log(request.cookies);
+      // console.log(request.cookies);
       request.body._addedBy = request.cookies.userId;
       Ingredient.create(request.body)
          .then(ingredient => response.json(ingredient))

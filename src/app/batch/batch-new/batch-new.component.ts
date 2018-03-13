@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -8,7 +8,7 @@ import { batchService } from '../../services/batch.service';
 
 import { Ingredient } from '../../class/ingredient';
 import { Batch } from '../../class/batch';
-import { forEach } from '@angular/router/src/utils/collection';
+
 @Component({
     selector: 'app-batch-new',
     templateUrl: './batch-new.component.html',
@@ -18,7 +18,7 @@ export class BatchNewComponent implements OnInit {
 
     batch : Batch = new Batch();
     ingredients : Array<Ingredient> = [];
-    batchIngredients : Array<{ 'ingredient' : Ingredient, 'amount' : number}> = [];
+    batchIngredients : Array<{ 'ingredient' : Ingredient, 'amount' : number }> = [];
     ingredientIndexer : Array<string> = []; // because find/filter/indexOf doesn't work on nested objects, more work to be done...
 
     ingredientToAdd: Ingredient = new Ingredient();
@@ -26,11 +26,14 @@ export class BatchNewComponent implements OnInit {
 
     errorMessage : String;
 
+    @Output()
+    addBatch = new EventEmitter<Batch>();
+
     constructor(
-    private auth : authService,
-    private ingredService : ingredientService,
-    private batchService : batchService,
-    private router : Router,
+        private auth : authService,
+        private ingredService : ingredientService,
+        private batchService : batchService,
+        private router : Router,
     ) { }
 
     ngOnInit() {
@@ -81,13 +84,24 @@ export class BatchNewComponent implements OnInit {
         this.ingredientIndexer.splice(idx, 1);
     }
 
-    createBatch(event : Event) : void {
+    createBatch(event : Event, form : NgForm) : void {
         event.stopPropagation();
         // Object.assign(this.batch.ingredients, this.batchIngredients);
         for (let item in this.batchIngredients) {
             this.batch.ingredients.push({'ingredient' : this.batchIngredients[item].ingredient._id, 'amount' : this.batchIngredients[item].amount})
         }
-        console.log(this.batch);
+        this.batchService.createBatch(this.batch)
+            .subscribe(batch => {
+                this.addBatch.emit(batch);
+                this.batch = new Batch();
+                this.batchIngredients = [];
+                this.ingredientIndexer = [];
+                form.reset();
+
+                // reroute on success?
+            }, error => {
+                console.log(`Errors creating batch ${error}`);
+            });
     }
 
 }

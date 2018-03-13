@@ -1,7 +1,7 @@
-<form (submit)='createBatch($event, batch.value)' #batch='ngForm'>
+<form (submit)='createBatch($event, batch)' #batch='ngForm'>
   <div class='form-control'>
     <label for="barCount">Bar Count:</label>
-    <input type="number" name="barCount" #barCount='ngModel' [(ngModel)]="batch.barCount" value='{{ batch.barCount }}'>
+    <input type="number" name="barCount" #barCount='ngModel' [(ngModel)]="batch.barCount" value='0'>
   </div>
   <table *ngIf='batchIngredients.length!==0'>
     <thead>
