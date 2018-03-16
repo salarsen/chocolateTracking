@@ -20,10 +20,26 @@ module.exports = {
             .then((batch) => {
                 // we need to update the  ingredients used to have their new available amounts
                 console.log(`Created: ${batch}`)
-                for(item in batch.ingredients){
+                console.log(`number of ingredients: ${batch.ingredients.length}`)
+                // let index = 0;
+                for(let i = 0; i < batch.ingredients.length; i++){
+                    console.log(i, batch.ingredients[i]._ingredientId)
+                    Ingredient.findById(batch.ingredients[i]._ingredientId, function(errors, ingredient){
+                        if(errors) {
+                            console.log('errors',errors);
+                            response.json(false);
+                        }
 
+                        console.log('ingredient',ingredient)
+                        // ingredient.set()
+                        
+                    })
+                    response.json(true);
+                    // index++;
+                        
                 }
-                response.json(batch)
+                // response.json(batch)
+                response.json(true);
             })
             .catch(console.log)
     },
