@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { authService } from '../../services/auth.service';
 import { batchService } from '../../services/batch.service';
 import { Batch } from '../../class/batch';
+// import { NgStyle } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-batch-list',
@@ -11,6 +13,7 @@ import { Batch } from '../../class/batch';
 })
 export class BatchListComponent implements OnInit {
   batch : Array<Batch> = [];
+  modal : Batch = new Batch();
 
   constructor(
     private auth: authService,
@@ -31,6 +34,12 @@ export class BatchListComponent implements OnInit {
       }, error => {
         console.log(`There was an error ${error}`)
       });
+  }
+
+  populateModal(event : Event, batch : Batch) : void {
+    console.log(batch);
+    // console.log()
+    this.modal = batch;
   }
 
 }

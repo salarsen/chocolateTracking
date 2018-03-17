@@ -7,6 +7,10 @@ const batchSchema = new Schema({
         required : true,
         default : 0,
     },
+    status : {
+        type : String,
+        default : "New",
+    },
     ingredients : [{
         _ingredientId : {
             type : Schema.Types.ObjectId,

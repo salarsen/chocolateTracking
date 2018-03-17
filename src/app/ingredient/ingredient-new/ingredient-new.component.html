@@ -1,3 +1,5 @@
+<app-nav [links]="[{ link : 'batch/list', name : 'View Batches'},{ link : 'batch/new', name : 'Create Batch'},{ link : 'ingredients/list', name : 'View Ingredients'}]"></app-nav>
+
 <legend>Add an Ingredient:</legend>
 
 <form (submit)='onSubmit($event, form) || form.reset()' #form='ngForm'>
@@ -37,4 +39,4 @@
   <button [disabled]="form.invalid">Add Ingredient</button>
 </form>
 
-<button routerLink="/home">Back</button>
+<!-- <button routerLink="/home">Back</button> -->

@@ -1,3 +1,4 @@
+<app-nav [links]="[{ link : 'batch/list', name : 'View Batches'},{ link : 'ingredients/list', name : 'View Ingredients'},{ link : 'ingredients/new', name : 'New Ingredient'}]"></app-nav>
 <form (submit)='createBatch($event, batch)' #batch='ngForm'>
   <div class='form-control'>
     <label for="barCount">Bar Count:</label>
@@ -20,7 +21,7 @@
         <td>{{ item.ingredient.name }}</td>
         <td>{{ item.amount }} {{ item.ingredient.amountType }}</td>
         <td>{{ item.ingredient.supplier }}</td>
-        <td><a (click)='getInfo($event, item.ingredient)'>i</a></td>
+        <td><a (click)='getInfo($event, item.ingredient)'><img src="/src/assets/open-iconic-master/svg/info.svg" alt="i"></a></td>
         <td><a (click)='removeIngredient($event, item.ingredient._id)'>-</a></td>
       </tr>
     </tbody>

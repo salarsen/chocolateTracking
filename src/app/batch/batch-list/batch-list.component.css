@@ -1,0 +1,7 @@
+section:first-of-type{
+    padding: 0 0 15px 0;
+}
+
+.modal-dialog {
+    max-width: 800px;
+}
