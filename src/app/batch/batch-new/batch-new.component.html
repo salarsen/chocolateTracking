@@ -21,7 +21,7 @@
         <td>{{ item.ingredient.name }}</td>
         <td>{{ item.amount }} {{ item.ingredient.amountType }}</td>
         <td>{{ item.ingredient.supplier }}</td>
-        <td><a (click)='getInfo($event, item.ingredient)'><img src="/src/assets/open-iconic-master/svg/info.svg" alt="i"></a></td>
+        <td><a (click)='getInfo($event, item.ingredient)'><img src="/assets/open-iconic-master/svg/info.svg" alt="i"></a></td>
         <td><a (click)='removeIngredient($event, item.ingredient._id)'>-</a></td>
       </tr>
     </tbody>
