@@ -13,7 +13,14 @@ module.exports = {
             });
     },
     get(request, response) {
-        return response.json('Get');
+        Batch.findById({ _id: request.body._id })
+            .populate('ingredients._ingredientId')
+            .then(batch => response.json(batch))
+            // .catch(console.log)
+            .catch(error => {
+                console.log(error)
+                response.status(500).json(error);
+            });
     },
     create(request, response) {
         // console.log('Batch create hit')

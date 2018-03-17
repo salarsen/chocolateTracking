@@ -1,1 +1,28 @@
 <app-nav [links]="[{ link : 'batch/new', name : 'Create Batch'},{ link : 'ingredients/list', name : 'View Ingredients'},{ link : 'ingredients/new', name : 'New Ingredient'}]"></app-nav>
+<table>
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td># of Bars</td>
+            <td>Created</td>
+            <td>Status</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor='let item of batch'>
+            <td>{{ item._id }}</td>
+            <td>{{ item.barCount }}</td>
+            <td>{{ item.createdAt }}</td>
+            <td><span>i</span></td>
+        </tr>
+    </tbody>
+</table>
+<ul>
+    <li *ngFor='let item of batch'>
+        <ul>
+            <li *ngFor='let ingredient of item.ingredients'>
+                {{ ingredient._ingredientId.name }}
+            </li>
+        </ul>
+    </li>
+</ul>
