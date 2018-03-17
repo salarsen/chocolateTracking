@@ -58,6 +58,10 @@ const ingredientSchema = new Schema({
     //     ref : 'Invoice',
     //     // required : true,
     // },
+    _batches : [{
+        type : Schema.Types.ObjectId,
+        ref : 'Ingredient',
+    }],
     _addedBy : {
         type : Schema.Types.ObjectId,
         ref : 'User',

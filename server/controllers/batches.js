@@ -3,7 +3,14 @@ const Ingredient = require('mongoose').model('Ingredient');
 
 module.exports = {
     index(request, response) {
-        return response.json('Index');
+        Batch.find({})
+            .populate('ingredients._ingredientId')
+            .then(batch => response.json(batch))
+            // .catch(console.log)
+            .catch(error => {
+                console.log(error)
+                response.status(500).json(error);
+            });
     },
     get(request, response) {
         return response.json('Get');
@@ -21,24 +28,26 @@ module.exports = {
                 // we need to update the  ingredients used to have their new available amounts
                 console.log(`Created: ${batch}`)
                 console.log(`number of ingredients: ${batch.ingredients.length}`)
-                // let index = 0;
+
                 for(let i = 0; i < batch.ingredients.length; i++){
                     console.log(i, batch.ingredients[i]._ingredientId)
-                    Ingredient.findById(batch.ingredients[i]._ingredientId, function(errors, ingredient){
-                        if(errors) {
-                            console.log('errors',errors);
-                            response.json(false);
-                        }
+                    Ingredient.findById(batch.ingredients[i]._ingredientId)
+                        .then((ingredient, errors) => {
+                            if(errors) {
+                                console.log('errors',errors);
+                                response.json(false);
+                            }
+                            ingredient.set({ 'amountUsed': ingredient.amountUsed + batch.ingredients[i].amount})
+                            ingredient._batches.push(batch._id);
+                            ingredient.save();
+                            console.log('ingredient',ingredient)
+                            // response.json(ingredient);
 
-                        console.log('ingredient',ingredient)
-                        // ingredient.set()
-                        
-                    })
-                    response.json(true);
-                    // index++;
-                        
+                        })
+                        .catch(console.log)
                 }
                 // response.json(batch)
+                console.log(batch)
                 response.json(true);
             })
             .catch(console.log)
