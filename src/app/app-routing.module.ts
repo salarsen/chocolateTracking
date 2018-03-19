@@ -15,6 +15,7 @@ import { BatchNewComponent } from './batch/batch-new/batch-new.component';
 import { BatchDetailComponent } from './batch/batch-detail/batch-detail.component';
 import { BatchEditComponent } from './batch/batch-edit/batch-edit.component';
 
+import { AuthGuard } from './auth.guard';
 
 const routes : Routes = [
   {
@@ -30,43 +31,57 @@ const routes : Routes = [
     path : 'batch',
     redirectTo: 'batch/list',
     pathMatch : 'full',
+    canActivate : [AuthGuard],
   },
   {
     path : 'batch/list',
-    component : BatchListComponent,
+    component: BatchListComponent,
+    canActivate: [AuthGuard],
   },
   {
     path : 'batch/new',
-    component : BatchNewComponent,
+    component: BatchNewComponent,
+    canActivate: [AuthGuard],
   },
   {
     path : 'batch/detail/:id',
-    component : BatchDetailComponent,
+    component: BatchDetailComponent,
+    canActivate: [AuthGuard],
   },
   {
     path : 'batch/edit/:id',
-    component : BatchEditComponent,
+    component: BatchEditComponent,
+    canActivate: [AuthGuard],
   },
+  // {
+  //   path : 'ingredients',
+  //   children : []
+  // },
   {
     path : 'ingredients',
     redirectTo : 'ingredients/list',
-    pathMatch : 'full',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
   {
     path : 'ingredients/list',
-    component : IngredientTableComponent,
+    component: IngredientTableComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'ingredients/new',
-    component : IngredientNewComponent,
+    component: IngredientNewComponent,
+    canActivate: [AuthGuard],
   },
   {
     path : 'ingredients/detail/:id',
-    component : IngredientDetailComponent,
+    component: IngredientDetailComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'ingredients/edit/:id',
     component: IngredientEditComponent,
+    canActivate: [AuthGuard],
   },
 ];
 

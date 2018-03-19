@@ -26,6 +26,7 @@ import { BatchListComponent } from './batch/batch-list/batch-list.component';
 import { BatchDetailComponent } from './batch/batch-detail/batch-detail.component';
 import { BatchEditComponent } from './batch/batch-edit/batch-edit.component';
 
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import { BatchEditComponent } from './batch/batch-edit/batch-edit.component';
     AppRoutingModule,
     CookieModule.forRoot(),
   ],
-  providers: [authService, batchService, ingredientService],
+  providers: [authService, batchService, ingredientService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

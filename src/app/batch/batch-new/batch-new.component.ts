@@ -37,11 +37,6 @@ export class BatchNewComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        if (!this.auth.isAuthed()) {
-            console.log('Not authed');
-            this.router.navigate(['home']);
-        }
-
         // this.batch.ingredients = [];
         // this.batch.barCount = 0;
         console.log(this.batch)

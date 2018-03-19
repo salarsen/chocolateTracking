@@ -6,14 +6,14 @@ module.exports = {
          .then(ingredients => {
             if(!ingredients) { throw new Error(); }
 
-            console.log(`Return ingredients: ${ingredients}`);
+            // console.log(`Return ingredients: ${ingredients}`);
 
             return response.json(ingredients);
          })
          .catch(console.log)
    },
    unused(request,response){
-      console.log('Looking for unused ingredients')
+      // console.log('Looking for unused ingredients')
       Ingredient.find({ 'used' : false })
          .then(ingredients => {
             if(!ingredients) { return response.json('{ "error" : "No available ingredients"}')}
@@ -29,7 +29,7 @@ module.exports = {
          .catch(console.log)
    },
    create(request, response){
-      console.log(`Trying to create an ingredient`);
+      // console.log(`Trying to create an ingredient`);
       // console.log(request.cookies);
       request.body._addedBy = request.cookies.userId;
       Ingredient.create(request.body)

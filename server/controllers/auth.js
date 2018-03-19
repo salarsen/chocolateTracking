@@ -2,7 +2,7 @@ const User = require('mongoose').model('User');
 
 module.exports = {
    login(request, response){
-      console.log(`Logging in ${request.body.username}`);
+      // console.log(`Logging in ${request.body.username}`);
       
       User.findOne({ username : request.body.username })
          .then(user => {
@@ -16,7 +16,7 @@ module.exports = {
          });
    },
    register(request, response){
-      console.log(`Registering : ${request.body}`);
+      // console.log(`Registering : ${request.body}`);
       
       User.create(request.body)
          .then(user => {
@@ -29,7 +29,7 @@ module.exports = {
          });
    },
    logout(request, response){
-      console.log('Logged out');
+      // console.log('Logged out');
       
       request.session.destroy();
       response.clearCookie('userId');
@@ -39,7 +39,7 @@ module.exports = {
 };
 
 function completeLogin(request, response, user){
-   console.log('Compeleting login');
+//    console.log('Compeleting login');
 
    request.session.user = user.toObject();
 

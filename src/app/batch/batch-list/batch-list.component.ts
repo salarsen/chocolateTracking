@@ -22,10 +22,6 @@ export class BatchListComponent implements OnInit {
   ) { }
 
   ngOnInit() : void {
-    if (!this.auth.isAuthed()) {
-      console.log('Not authed');
-      this.router.navigate(['home']);
-    }
 
     this.batchService.getBatches()
       .subscribe(batch => {

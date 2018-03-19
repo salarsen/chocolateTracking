@@ -33,11 +33,11 @@ module.exports = {
         Batch.create(request.body)
             .then((batch) => {
                 // we need to update the  ingredients used to have their new available amounts
-                console.log(`Created: ${batch}`)
-                console.log(`number of ingredients: ${batch.ingredients.length}`)
+                // console.log(`Created: ${batch}`)
+                // console.log(`number of ingredients: ${batch.ingredients.length}`)
 
                 for(let i = 0; i < batch.ingredients.length; i++){
-                    console.log(i, batch.ingredients[i]._ingredientId)
+                    // console.log(i, batch.ingredients[i]._ingredientId)
                     Ingredient.findById(batch.ingredients[i]._ingredientId)
                         .then((ingredient, errors) => {
                             if(errors) {
@@ -47,14 +47,14 @@ module.exports = {
                             ingredient.set({ 'amountUsed': ingredient.amountUsed + batch.ingredients[i].amount})
                             ingredient._batches.push(batch._id);
                             ingredient.save();
-                            console.log('ingredient',ingredient)
+                            // console.log('ingredient',ingredient)
                             // response.json(ingredient);
 
                         })
                         .catch(console.log)
                 }
                 // response.json(batch)
-                console.log(batch)
+                // console.log(batch)
                 response.json(true);
             })
             .catch(console.log)
