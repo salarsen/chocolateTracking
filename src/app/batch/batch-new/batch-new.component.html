@@ -1,4 +1,10 @@
 <app-nav [links]="[{ link : 'batch/list', name : 'View Batches'},{ link : 'ingredients/list', name : 'View Ingredients'},{ link : 'ingredients/new', name : 'New Ingredient'}]"></app-nav>
+
+<div *ngIf='batchErrors.length'>
+  <ul class="alert alert-danger">
+    <li *ngFor='let error of batchErrors'>{{error}}</li>
+  </ul>
+</div>
 <form (submit)='createBatch($event, batch)' #batch='ngForm'>
   <div class='form-control'>
     <label for="barCount">Bar Count:</label>

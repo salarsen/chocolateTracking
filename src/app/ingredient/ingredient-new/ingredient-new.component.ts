@@ -16,6 +16,8 @@ export class IngredientNewComponent {
 
   ingredient : Ingredient = new Ingredient();
 
+  ingredientErrors: string[] = [];
+
   @Output()
   addIngredient = new EventEmitter<Ingredient>();
 
@@ -35,10 +37,7 @@ export class IngredientNewComponent {
         this.addIngredient.emit(ingredient);
         this.ingredient = new Ingredient();
         form.reset();
-      },
-        error => {
-          console.log(`Errors creating an ingredient: ${error}`);
-      });
+      }, error => this.handleErrors(error.json()));
       console.log(`We submitted an ingredient`);
     }
 
@@ -47,5 +46,10 @@ export class IngredientNewComponent {
     this.auth.logout()
       .then(() => this.router.navigate(['home']))
       .catch(response => console.log(response.json()));
+  }
+
+  private handleErrors(errors: string[] | Error): void {
+    console.log(errors);
+    this.ingredientErrors = Array.isArray(errors) ? errors : [errors.message];
   }
 }

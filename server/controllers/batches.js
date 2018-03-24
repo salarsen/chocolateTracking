@@ -8,8 +8,9 @@ module.exports = {
             .then(batch => response.json(batch))
             // .catch(console.log)
             .catch(error => {
-                console.log(error)
-                response.status(500).json(error);
+                response.status(422).json(
+                    Object.keys(error.errors).map(key => error.errors[key].message) // map errors
+                );
             });
     },
     get(request, response) {
@@ -18,8 +19,9 @@ module.exports = {
             .then(batch => response.json(batch))
             // .catch(console.log)
             .catch(error => {
-                console.log(error)
-                response.status(500).json(error);
+                response.status(422).json(
+                    Object.keys(error.errors).map(key => error.errors[key].message) // map errors
+                );
             });
     },
     create(request, response) {
@@ -39,10 +41,13 @@ module.exports = {
                 for(let i = 0; i < batch.ingredients.length; i++){
                     // console.log(i, batch.ingredients[i]._ingredientId)
                     Ingredient.findById(batch.ingredients[i]._ingredientId)
-                        .then((ingredient, errors) => {
-                            if(errors) {
-                                console.log('errors',errors);
-                                response.json(false);
+                        .then((ingredient, error) => {
+                            if(error) {
+                                console.log('errors', error);
+                                response.status(422).json(
+                                    Object.keys(error.errors).map(key => error.errors[key].message) // map errors
+                                );
+                                
                             }
                             ingredient.set({ 'amountUsed': ingredient.amountUsed + batch.ingredients[i].amount})
                             ingredient._batches.push(batch._id);
@@ -51,13 +56,21 @@ module.exports = {
                             // response.json(ingredient);
 
                         })
-                        .catch(console.log)
+                        .catch(error => {
+                            response.status(422).json(
+                                Object.keys(error.errors).map(key => error.errors[key].message) // map errors
+                            );
+                        })
                 }
                 // response.json(batch)
                 // console.log(batch)
                 response.json(true);
             })
-            .catch(console.log)
+            .catch(error => {
+                response.status(422).json(
+                    Object.keys(error.errors).map(key => error.errors[key].message) // map errors
+                );
+            })
     },
     update(request, response) {
         return response.json('Update');

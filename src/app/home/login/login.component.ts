@@ -28,6 +28,7 @@ export class LoginComponent {
   }
 
   private handleErrors(errors : string[] | Error) : void {
+    console.log(errors);
     this.loginErrors = Array.isArray(errors) ? errors : [errors.message];
   }
 }

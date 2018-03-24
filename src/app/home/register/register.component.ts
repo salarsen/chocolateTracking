@@ -27,6 +27,7 @@ export class RegisterComponent {
   }
 
   private handleErrors(errors: string[] | Error): void {
+    console.log(errors);
     this.registrationErrors = Array.isArray(errors) ? errors : [errors.message];
   }
 }

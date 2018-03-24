@@ -21,11 +21,11 @@ export class BatchNewComponent implements OnInit {
     batchIngredients : Array<{ 'ingredient' : Ingredient, 'amount' : number }> = [];
     ingredientIndexer : Array<string> = []; // because find/filter/indexOf doesn't work on nested objects, more work to be done...
 
+
     ingredientToAdd: Ingredient = new Ingredient();
     amountToUse : number;
 
-    errorMessage : String;
-
+    batchErrors : string[] = [];
     @Output()
     addBatch = new EventEmitter<Batch>();
 
@@ -45,9 +45,7 @@ export class BatchNewComponent implements OnInit {
         this.ingredService.getIngredientsAvailable()
             .subscribe(ingredients => {
                 this.ingredients = ingredients;
-            },error => {
-                console.log(`Error fetching ingredients: ${error}`)
-            });
+            },error => this.handleErrors(error.json()));
     }
 
     addIngredient(event : Event) : void {
@@ -94,9 +92,12 @@ export class BatchNewComponent implements OnInit {
                 form.reset();
 
                 // reroute on success?
-            }, error => {
-                console.log(`Errors creating batch ${error}`);
-            });
+            }, error => this.handleErrors(error.json()));
+    }
+
+    private handleErrors(errors: string[] | Error): void {
+        console.log(errors);
+        this.batchErrors = Array.isArray(errors) ? errors : [errors.message];
     }
 
 }

@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const batchSchema = new Schema({
     barCount : {
         type : Number,
-        required : true,
+        required : [true, "Number of bars is required."],
         default : 0,
     },
     status : {
@@ -18,7 +18,7 @@ const batchSchema = new Schema({
         },
         amount : {
             type : Number,
-            required : true,
+            required : [true, "Using an ingredient requires that you add an amount."],
         },
     }],
     _addedBy : {

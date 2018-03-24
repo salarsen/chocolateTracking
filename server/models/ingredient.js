@@ -4,22 +4,22 @@ const { Schema } = mongoose;
 const ingredientSchema = new Schema({
     name : {
         type : String,
-        required : true,
+        required : [true, "Ingredient name is required."],
         trim : true,
     },
     supplier : {
         type : String,
-        required : true,
+        required : [true, "Supplier name is required."],
         trim : true,
     },
     supplierLotNo : {
         type : String,
-        required: true,
+        required: [true, "Supplier lot number is required."],
         trim : true,
     },
     recalled : {
         type : Boolean,
-        required : true,
+        required : [true, "Recall status must be set to true or false."],
         trim : true,
         default : false,
     },
@@ -33,12 +33,12 @@ const ingredientSchema = new Schema({
     },
     shippingSignedFor : {
         type : String,
-        required: true,
+        required: [true, "Supplier shipment must be signed for."],
         trim : true,
     },
     amount : {
         type : Number,
-        required : true,
+        required : [true, "Total amount on this shipment cannot be 0"],
         default : 0,
     },
     amountUsed : {
@@ -51,7 +51,7 @@ const ingredientSchema = new Schema({
     },
     amountType : {
         type : String,
-        required : true,
+        required : [true, "Amount measurement must be set."],
     },
     // _invoice : {
     //     type : Schema.Types.ObjectId,

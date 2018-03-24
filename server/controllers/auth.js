@@ -12,7 +12,8 @@ module.exports = {
             completeLogin(request, response, user);
          })
          .catch(error => {
-            response.status(401).json('User does not exists');
+            console.log(error);
+            response.status(422).json(['User does not exists']);
          });
    },
    register(request, response){
@@ -23,6 +24,7 @@ module.exports = {
             completeLogin(request, response, user);
          })
          .catch(error => {
+            console.log(error);
             response.status(422).json(
                Object.keys(error.errors).map(key => error.errors[key].message) // map errors
             );
