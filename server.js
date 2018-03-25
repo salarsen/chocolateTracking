@@ -26,6 +26,11 @@ app.use(cookieParser('testing'));
 app.use(session(sessionConfig));
 app.use(express.static(path.resolve(__dirname, 'dist')));
 
+// app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content - Type, Accept");
+//     next();
+// });
 require('./server/config/database');
 
 app.use('/api', require('./server/config/routes'));

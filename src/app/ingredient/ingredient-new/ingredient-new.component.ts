@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
 // File handling req's
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 import { Ingredient } from '../../class/ingredient'
@@ -27,6 +27,15 @@ export class IngredientNewComponent {
     'image/jpeg',
     'image/png',
   ];
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin' : '*',
+      // 'Access-Control-Allow-Headers': "Content-Type",
+      // "Access-Control-Allow-Methods": "POST",
+    })
+  };
 
   @ViewChild('fileInput') fileInput: ElementRef;
   fileDataUri = '';
@@ -77,10 +86,10 @@ export class IngredientNewComponent {
       // console.log(this.fileDataUri)
       const base64File = this.fileDataUri.split(',')[1];
       // console.log(base64File);
-      const data = { 'image' : base64File, 'Access-Control-Allow-Origin' : '*' };
+      const data = { 'image' : base64File };
       // console.log(data)
       console.log(environment.apiUrl)
-      this.http.post(`${environment.apiUrl}/upload-invoice`, {headers : {'Access-Control-Allow-Origin' : '*'}}, {params : data})
+      this.http.post(`${environment.apiUrl}/upload-invoice`, data, this.httpOptions)
         .subscribe(res => {
           console.log('res',res);
           this.fileInput.nativeElement.value = '';
