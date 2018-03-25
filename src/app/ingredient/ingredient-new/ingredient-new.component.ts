@@ -2,6 +2,10 @@ import { Component, Output, EventEmitter, NgModule, ElementRef, ViewChild } from
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
+// File handling req's
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+
 import { Ingredient } from '../../class/ingredient'
 
 import { authService } from '../../services/auth.service';
@@ -34,7 +38,8 @@ export class IngredientNewComponent {
   constructor(
     private auth : authService,
     private ingred : ingredientService,
-    private router : Router
+    private router : Router,
+    private http : HttpClient,
   ) { }
 
   onSubmit(event : Event, form : NgForm) : void {
@@ -55,7 +60,7 @@ export class IngredientNewComponent {
     const file = this.fileInput.nativeElement.files[0];
     if(file && this.validateFile(file)){
       const reader = new FileReader();
-      console.log(this.fileInput.nativeElement.files)
+      // console.log(this.fileInput.nativeElement.files)
       reader.readAsDataURL(this.fileInput.nativeElement.files[0]);
       reader.onload = () => {
         this.fileDataUri = reader.result;
@@ -69,9 +74,17 @@ export class IngredientNewComponent {
     event.preventDefault();
 
     if(this.fileDataUri.length > 0){
-      console.log(this.fileDataUri)
+      // console.log(this.fileDataUri)
       const base64File = this.fileDataUri.split(',')[1];
-      console.log(base64File);
+      // console.log(base64File);
+      const data = { 'image' : base64File, 'Access-Control-Allow-Origin' : '*' };
+      // console.log(data)
+      console.log(environment.apiUrl)
+      this.http.post(`${environment.apiUrl}/upload-invoice`, {headers : {'Access-Control-Allow-Origin' : '*'}}, {params : data})
+        .subscribe(res => {
+          console.log('res',res);
+          this.fileInput.nativeElement.value = '';
+        }, error => this.handleErrors(error));
     }
   }
 
