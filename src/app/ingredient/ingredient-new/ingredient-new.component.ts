@@ -28,14 +28,14 @@ export class IngredientNewComponent {
     'image/png',
   ];
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin' : '*',
-      // 'Access-Control-Allow-Headers': "Content-Type",
-      // "Access-Control-Allow-Methods": "POST",
-    })
-  };
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Access-Control-Allow-Headers': "Content-Type",
+  //     'Content-Type': 'application/json',
+  //     'Access-Control-Allow-Origin' : '*',
+  //     "Access-Control-Allow-Methods": "POST",
+  //   })
+  // };
 
   @ViewChild('fileInput') fileInput: ElementRef;
   fileDataUri = '';
@@ -88,8 +88,8 @@ export class IngredientNewComponent {
       // console.log(base64File);
       const data = { 'image' : base64File };
       // console.log(data)
-      console.log(environment.apiUrl)
-      this.http.post(`${environment.apiUrl}/upload-invoice`, data, this.httpOptions)
+      // console.log(this.httpOptions)
+      this.http.post(`${environment.apiUrl}/upload-invoice`, data) //, this.httpOptions)
         .subscribe(res => {
           console.log('res',res);
           this.fileInput.nativeElement.value = '';
