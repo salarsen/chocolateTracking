@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { CookieModule } from 'ngx-cookie';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -51,6 +52,7 @@ import { AuthGuard } from './auth.guard';
     HttpModule,
     FormsModule,
     AppRoutingModule,
+    HttpClientModule,
     CookieModule.forRoot(),
   ],
   providers: [authService, batchService, ingredientService, AuthGuard],

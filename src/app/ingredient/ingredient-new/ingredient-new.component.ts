@@ -1,6 +1,10 @@
-import { Component, Output, EventEmitter, NgModule } from '@angular/core';
+import { Component, Output, EventEmitter, NgModule, ElementRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+
+// File handling req's
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 import { Ingredient } from '../../class/ingredient'
 
@@ -18,13 +22,33 @@ export class IngredientNewComponent {
 
   ingredientErrors: string[] = [];
 
+  acceptedMimeTypes = [
+    'image/gif',
+    'image/jpeg',
+    'image/png',
+  ];
+
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Access-Control-Allow-Headers': "Content-Type",
+  //     'Content-Type': 'application/json',
+  //     'Access-Control-Allow-Origin' : '*',
+  //     "Access-Control-Allow-Methods": "POST",
+  //   })
+  // };
+
+  @ViewChild('fileInput') fileInput: ElementRef;
+  fileDataUri = '';
+  errorMsg = '';
+
   @Output()
   addIngredient = new EventEmitter<Ingredient>();
 
   constructor(
     private auth : authService,
     private ingred : ingredientService,
-    private router : Router
+    private router : Router,
+    private http : HttpClient,
   ) { }
 
   onSubmit(event : Event, form : NgForm) : void {
@@ -41,11 +65,47 @@ export class IngredientNewComponent {
       console.log(`We submitted an ingredient`);
     }
 
+  previewFile() : void {
+    const file = this.fileInput.nativeElement.files[0];
+    if(file && this.validateFile(file)){
+      const reader = new FileReader();
+      // console.log(this.fileInput.nativeElement.files)
+      reader.readAsDataURL(this.fileInput.nativeElement.files[0]);
+      reader.onload = () => {
+        this.fileDataUri = reader.result;
+      }
+    } else {
+      this.errorMsg = 'File must be a jpg, png, or gif and cannot exceed 500 KB in size';
+    }
+  }
+
+  uploadFile(event : Event) : void {
+    event.preventDefault();
+
+    if(this.fileDataUri.length > 0){
+      // console.log(this.fileDataUri)
+      const base64File = this.fileDataUri.split(',')[1];
+      // console.log(base64File);
+      const data = { 'image' : base64File };
+      // console.log(data)
+      // console.log(this.httpOptions)
+      this.http.post(`${environment.apiUrl}/upload-invoice`, data) //, this.httpOptions)
+        .subscribe(res => {
+          console.log('res',res);
+          this.fileInput.nativeElement.value = '';
+        }, error => this.handleErrors(error));
+    }
+  }
+
   logout(event: Event): void {
     event.stopPropagation();
     this.auth.logout()
       .then(() => this.router.navigate(['home']))
       .catch(response => console.log(response.json()));
+  }
+
+  private validateFile(file): boolean {
+    return this.acceptedMimeTypes.includes(file.type) && file.size < 5000000;
   }
 
   private handleErrors(errors: string[] | Error): void {

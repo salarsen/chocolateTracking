@@ -4,8 +4,8 @@
     <li *ngFor='let error of ingredientErrors'>{{error}}</li>
   </ul>
 </div>
-
-<legend>Add an Ingredient:</legend>
+{{errorMsg}}
+<legend>Add an Ingredient (all fields required):</legend>
 
 <form (submit)='onSubmit($event, form) || form.reset()' #form='ngForm'>
   <div>
@@ -41,7 +41,12 @@
       <option value="oz">Ounce</option>
     </select>
   </div>
-  <button [disabled]="form.invalid">Add Ingredient</button>
+  <img [src]="fileDataUri">
+  <form (submit)="uploadFile($event)">
+    <input type="file" (change)="previewFile()" #fileInput>
+    <button type="submit" [disabled]="fileDataUri.length===0">Upload</button>
+  </form>
+  <button type="submit" [disabled]="form.invalid">Add Ingredient</button>
 </form>
 
 <!-- <button routerLink="/home">Back</button> -->

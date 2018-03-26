@@ -20,12 +20,29 @@ const sessionConfig = {
    },
 };
 
+// app.all('*', function (req, res, next) {
+//     console.log('test')
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type');
+//     if ('OPTIONS' == req.method) {
+//         res.sendStatus(200);
+//     } else {
+//         next();
+//     }
+// });
+
 app.use(parser.json());
 app.use(parser.urlencoded({ extended : true }));
 app.use(cookieParser('testing'));
 app.use(session(sessionConfig));
 app.use(express.static(path.resolve(__dirname, 'dist')));
 
+// app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content - Type, Accept");
+//     next();
+// });
 require('./server/config/database');
 
 app.use('/api', require('./server/config/routes'));
