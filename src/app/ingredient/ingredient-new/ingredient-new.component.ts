@@ -82,19 +82,19 @@ export class IngredientNewComponent {
   uploadFile(event : Event) : void {
     event.preventDefault();
 
-    if(this.fileDataUri.length > 0){
-      // console.log(this.fileDataUri)
-      const base64File = this.fileDataUri.split(',')[1];
-      // console.log(base64File);
-      const data = { 'image' : base64File };
-      // console.log(data)
-      // console.log(this.httpOptions)
-      this.http.post(`${environment.apiUrl}/upload-invoice`, data) //, this.httpOptions)
-        .subscribe(res => {
-          console.log('res',res);
-          this.fileInput.nativeElement.value = '';
-        }, error => this.handleErrors(error));
-    }
+    // if(this.fileDataUri.length > 0){
+    //   // console.log(this.fileDataUri)
+    //   const base64File = this.fileDataUri.split(',')[1];
+    //   // console.log(base64File);
+    //   const data = { 'image' : base64File };
+    //   // console.log(data)
+    //   // console.log(this.httpOptions)
+    //   this.http.post(`${environment.apiUrl}/upload-invoice`, data) //, this.httpOptions)
+    //     .subscribe(res => {
+    //       console.log('res',res);
+    //       this.fileInput.nativeElement.value = '';
+    //     }, error => this.handleErrors(error));
+    // }
   }
 
   logout(event: Event): void {
