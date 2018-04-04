@@ -7,8 +7,8 @@
 </div>
 <form (submit)='createBatch($event, batch)' #batch='ngForm'>
   <div class='form-control'>
-    <label for="barCount">Bar Count:</label>
-    <input type="number" name="barCount" #barCount='ngModel' [(ngModel)]="batch.barCount" value='0'>
+    <label for="name">Bar Name:</label>
+    <input type="text" name="name" #name='ngModel' [(ngModel)]="batch.name">
   </div>
   <table *ngIf='batchIngredients.length!==0'>
     <thead>
@@ -39,5 +39,5 @@
   <option *ngFor='let ingredient of ingredients, let idx = index' [ngValue]='ingredient'>{{ ingredient.name }} - {{ ingredient.supplier }}</option>
 </select>
 <input type="number" [(ngModel)]="amountToUse" (keyup.enter)='addIngredient($event)'>
-{{ ingredientToAdd.amountType }}
+<!-- {{ ingredientToAdd.amountType }} -->
 <button (click)='addIngredient($event)'>Add</button>

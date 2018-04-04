@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { authService } from './services/auth.service';
 import { batchService } from './services/batch.service';
 import { ingredientService } from './services/ingredient.service';
+import { fileService } from './services/file.service';
 
 import { AppComponent } from './app.component';
 // import { IngredientComponent } from './ingredient/ingredient.component';
@@ -55,7 +56,7 @@ import { AuthGuard } from './auth.guard';
     HttpClientModule,
     CookieModule.forRoot(),
   ],
-  providers: [authService, batchService, ingredientService, AuthGuard],
+  providers: [authService, batchService, ingredientService, fileService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

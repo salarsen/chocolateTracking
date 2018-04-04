@@ -10,6 +10,7 @@ import { Ingredient } from '../../class/ingredient'
 
 import { authService } from '../../services/auth.service';
 import { ingredientService } from '../../services/ingredient.service';
+import { fileService } from '../../services/file.service';
 
 @Component({
   selector: 'app-ingredient-new',
@@ -47,6 +48,7 @@ export class IngredientNewComponent {
   constructor(
     private auth : authService,
     private ingred : ingredientService,
+    private file : fileService,
     private router : Router,
     private http : HttpClient,
   ) { }
@@ -85,15 +87,20 @@ export class IngredientNewComponent {
     if(this.fileDataUri.length > 0){
       // console.log(this.fileDataUri)
       const base64File = this.fileDataUri.split(',')[1];
-      // console.log(base64File);
+      // console.log(typeof base64File);
       const data = { 'image' : base64File };
-      // console.log(data)
-      // console.log(this.httpOptions)
-      this.http.post(`${environment.apiUrl}/upload-invoice`, data) //, this.httpOptions)
+      // console.log(typeof data)
+    //   // console.log(this.httpOptions)
+      this.file.uploadFile(data)
         .subscribe(res => {
           console.log('res',res);
-          this.fileInput.nativeElement.value = '';
-        }, error => this.handleErrors(error));
+          // this.fil
+        },error => this.handleErrors(error.json()));
+    //   this.http.post(`${environment.apiUrl}/upload-invoice`, data) //, this.httpOptions)
+    //     .subscribe(res => {
+    //       console.log('res',res);
+    //       this.fileInput.nativeElement.value = '';
+    //     }, error => this.handleErrors(error));
     }
   }
 

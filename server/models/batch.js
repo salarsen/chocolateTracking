@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const batchSchema = new Schema({
+    name : {
+        type : String,
+    },
     barCount : {
         type : Number,
         required : [true, "Number of bars is required."],
