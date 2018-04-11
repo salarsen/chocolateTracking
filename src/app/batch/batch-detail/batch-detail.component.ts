@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { batchService } from '../../services/batch.service';
+
+import { Batch } from '../../class/batch';
+
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-batch-detail',
@@ -7,9 +14,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BatchDetailComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  batch : Batch;
 
-  ngOnInit() {
+  constructor(
+    private router : Router,
+    private route : ActivatedRoute,
+    private batchService : batchService,
+  ) { }
+
+  ngOnInit() : void {
+    this.route.paramMap.switchMap(params => {
+      return this.batchService.getBatch(params.get('id'));
+    })
+    .subscribe(batch => {
+      console.log(`Got batch ${batch}`);
+
+      this.batch = batch;
+    }, error =>{
+      console.log(`Error: ${error}`)
+    })
   }
 
 }

@@ -24,6 +24,9 @@ const batchSchema = new Schema({
             required : [true, "Using an ingredient requires that you add an amount."],
         },
     }],
+    notes : [{
+        type : String,
+    }],
     _addedBy : {
         type : Schema.Types.ObjectId,
         ref : 'User',

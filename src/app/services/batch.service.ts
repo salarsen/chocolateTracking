@@ -30,6 +30,7 @@ export class batchService {
   }
 
   getBatch(id : string) : Observable<Batch> {
+    console.log(`${batchService.base}${id}`)
     return this.http.get(`${ batchService.base }${id}`)
       .map(response => response.json());
   }

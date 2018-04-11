@@ -14,9 +14,12 @@ module.exports = {
             });
     },
     get(request, response) {
-        Batch.findById({ _id: request.body._id })
+        Batch.findById({ _id: request.params.batch_id })
             .populate('ingredients._ingredientId')
-            .then(batch => response.json(batch))
+            .then(batch => {
+                console.log(batch);
+                response.json(batch)
+            })
             // .catch(console.log)
             .catch(error => {
                 response.status(422).json(

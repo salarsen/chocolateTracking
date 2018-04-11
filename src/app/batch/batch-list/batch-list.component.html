@@ -10,6 +10,7 @@
                 <td>Created</td>
                 <td>Status</td>
                 <td>Info</td>
+                <td>Edit</td>
             </tr>
         </thead>
         <tbody>
@@ -19,6 +20,7 @@
                 <td>{{ item.createdAt }}</td>
                 <td>{{ item.status }}</td>
                 <td><img style="width : 16px; height: 16px;" src="/assets/open-iconic-master/svg/info.svg" alt="i" (click)='populateModal($event, item)' data-toggle="modal" data-target="#exampleModal"></td>
+                <td><span [routerLink]='["/batch/edit", item._id]'>Edit</span></td>
             </tr>
         </tbody>
     </table>
@@ -26,9 +28,9 @@
     <!-- Modal -->
     <!-- <div class="myModal">test</div> -->
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
         Launch demo modal
-    </button>
+    </button> -->
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
