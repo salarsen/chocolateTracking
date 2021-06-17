@@ -1,5 +1,7 @@
 # ChocolateIngredients
 
+# Start of locally-hosted program to track ingredients, processes, and quantities for the production of Chocolate bars from scratch.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.3.
 
 ## Development server
